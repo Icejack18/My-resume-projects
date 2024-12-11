@@ -1,30 +1,24 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int xP, int yP) : Object(xP, yP)
+Enemy::Enemy(int xP, int yP, int h) : Object(xP, yP)
 {
-	Position *posE = new Position(xP, yP);
-	position.push_back(posE);
 	PosX = xP;
 	PosY = yP;
-	hp = 2;
+	hp = h;
 }
 
 Enemy::~Enemy(void)
 {
 }
 
-bool Enemy::isCollided(int xP, int yP)
+void Enemy::damage(int d)
 {
-	bool isHit = false;
-	double dx = xLocation() - xP;
-	double dy = yLocation() - yP;
+	hp -= d;
+}
 
-	if (dx == 0 && dy == 0)
-	{
-
-		isHit = true;
-	}
-	return isHit;
+int Enemy::checkHealth()
+{
+    return hp;
 }
 
 int Enemy::xLocation()

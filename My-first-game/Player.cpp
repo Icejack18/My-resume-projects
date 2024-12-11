@@ -108,22 +108,28 @@ void Player::print()
 	}
 }
 
-bool Player::isCollided(int xP, int yP)
+bool Player::isCollided(Enemy *e)
 {
 	for (int i = 0; i < position.size(); i++)
 	{
-		Enemy *en = new Enemy(position[i]->getX(), position[i]->getY());
-		if (en->isCollided(xP, yP))
+		if (e->xLocation() == xLocation() && e->yLocation() == yLocation())
 		{
-			int damage = 0;
-			damage = rand() % 11;
-			health -= damage;
+			int damageP = 0, damageE = 0;
+			do
+			{
+			damageP = rand() % 6;
+			damageE = rand() % 11;
+			health -= damageP;
+			e->damage(damageE);
+			} while (e->checkHealth() > 0 && health > 0);
+
+			if(e->checkHealth() <= 0){
 			delete position[i];
 			position.erase(position.begin() + i);
-			delete en;
+			}
+			else cout << "Enemy has defeated you!\n";
 			return true;
 		}
-		delete en;
 	}
 	return false;
 }

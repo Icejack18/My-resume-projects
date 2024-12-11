@@ -6,7 +6,7 @@ class Object
 public:
 	Object(int xi, int yi);
 	virtual ~Object(void);
-	virtual bool isCollided(int xP, int yP) = 0;
+	virtual int checkHealth() = 0;
 	virtual int xLocation() = 0;
 	virtual int yLocation() = 0;
 

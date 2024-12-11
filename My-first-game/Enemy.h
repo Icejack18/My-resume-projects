@@ -4,9 +4,10 @@
 class Enemy : public Object
 {
 public:
-	Enemy(int xP, int yP);
+	Enemy(int xP, int yP, int h);
 	~Enemy(void);
-	bool isCollided(int xP, int yP);
+	void damage(int d);
+	int checkHealth();
 	int xLocation();
 	int yLocation();
 

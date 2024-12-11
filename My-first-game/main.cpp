@@ -40,16 +40,18 @@ int main()
 	map[p1->xLocation()][p1->yLocation()] = 'P';
 
 	// Creting enemies >:(
-	int random = 0;
-	random = rand() % 9 + 1;
+	int randomX = 0, randomY = 0;
+	randomX = rand() % 9 + 1;
+	randomY = rand() % 9 + 1;
 
-	Enemy *enemy = new Enemy(random, random / 2);
+	Enemy *enemy = new Enemy(randomX, randomY, 2);
 	Position *p = new Position(enemy->xLocation(), enemy->yLocation());
 	p1->add(p);
 	map[enemy->xLocation()][enemy->yLocation()] = '#';
 
-	random = rand() % 9 + 1;
-	Enemy* enemy2 = new Enemy(random / 2, random);
+	randomX = rand() % 9 + 1;
+	randomY = rand() % 9 + 1;
+	Enemy* enemy2 = new Enemy(randomX, randomY, 2);
 	Position* p2 = new Position(enemy2->xLocation(), enemy2->yLocation());
 	p1->add(p2);
 	map[enemy2->xLocation()][enemy2->yLocation()] = '#';

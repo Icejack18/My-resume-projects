@@ -10,7 +10,7 @@ public:
 	void step();
 	bool winner();
 	void print();
-	bool isCollided(int xP, int yP);
+	bool isCollided(Enemy *e);
 	void add(Position *p);
 	int checkHealth();
 	int xLocation();
