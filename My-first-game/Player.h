@@ -9,7 +9,6 @@ public:
 	~Player(void);
 	void step();
 	bool winner();
-	void print();
 	bool isCollided(Enemy *e);
 	void add(Position *p);
 	int checkHealth();
@@ -20,4 +19,5 @@ protected:
 	int PosX;
 	int PosY;
 	int health;
+	int power;
 };

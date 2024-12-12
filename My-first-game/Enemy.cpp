@@ -1,10 +1,11 @@
 #include "Enemy.h"
 
-Enemy::Enemy(int xP, int yP, int h) : Object(xP, yP)
+Enemy::Enemy(int xP, int yP, int h, int p) : Object(xP, yP)
 {
 	PosX = xP;
 	PosY = yP;
 	hp = h;
+	pwr = p;
 }
 
 Enemy::~Enemy(void)
@@ -24,6 +25,11 @@ int Enemy::checkHealth()
 int Enemy::xLocation()
 {
 	return PosX;
+}
+
+int Enemy::checkPower()
+{
+    return pwr;
 }
 
 int Enemy::yLocation()

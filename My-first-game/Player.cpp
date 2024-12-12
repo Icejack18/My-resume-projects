@@ -5,6 +5,7 @@ Player::Player() : Object(0, 0)
 	PosX = 0;
 	PosY = 0;
 	health = 10;
+	power = 10;
 }
 
 Player::~Player(void)
@@ -100,14 +101,6 @@ bool Player::winner()
 		return false;
 }
 
-void Player::print()
-{
-	for (int i = 0; i < position.size(); i++)
-	{
-		cout << position[i]->getX() << ", " << position[i]->getY() << endl;
-	}
-}
-
 bool Player::isCollided(Enemy *e)
 {
 	for (int i = 0; i < position.size(); i++)
@@ -117,8 +110,8 @@ bool Player::isCollided(Enemy *e)
 			int damageP = 0, damageE = 0;
 			do
 			{
-			damageP = rand() % 6;
-			damageE = rand() % 11;
+			damageP = rand() % e->checkPower();
+			damageE = rand() % power;
 			health -= damageP;
 			e->damage(damageE);
 			} while (e->checkHealth() > 0 && health > 0);
