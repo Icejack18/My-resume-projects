@@ -15,13 +15,3 @@ void Position::setY(int iy)
 {
 	yPosition = iy;
 }
-
-int Position::getX()
-{
-	return xPosition;
-}
-
-int Position::getY()
-{
-	return yPosition;
-}

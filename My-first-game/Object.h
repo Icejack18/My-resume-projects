@@ -11,5 +11,6 @@ public:
 	virtual int yLocation() = 0;
 
 protected:
-	vector<Position *> position;
+	vector<Position *> p_enemies;
+	vector<Position *> p_healthpacks;
 };

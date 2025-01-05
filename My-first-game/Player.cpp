@@ -95,7 +95,7 @@ void Player::step()
 
 bool Player::winner()
 {
-	if (position.empty())
+	if (p_enemies.empty())
 		return true;
 	else
 		return false;
@@ -103,7 +103,7 @@ bool Player::winner()
 
 bool Player::isCollided(Enemy *e)
 {
-	for (int i = 0; i < position.size(); i++)
+	for (int i = 0; i < p_enemies.size(); i++)
 	{
 		if (e->xLocation() == xLocation() && e->yLocation() == yLocation())
 		{
@@ -117,8 +117,8 @@ bool Player::isCollided(Enemy *e)
 			} while (e->checkHealth() > 0 && health > 0);
 
 			if(e->checkHealth() <= 0){
-			delete position[i];
-			position.erase(position.begin() + i);
+			delete p_enemies[i];
+			p_enemies.erase(p_enemies.begin() + i);
 			}
 			else cout << "Enemy has defeated you!\n";
 			return true;
@@ -129,7 +129,7 @@ bool Player::isCollided(Enemy *e)
 
 void Player::add(Position *p)
 {
-	position.push_back(p);
+	p_enemies.push_back(p);
 }
 
 int Player::checkHealth()
