@@ -7,13 +7,13 @@
 #include <time.h>
 
 // Settings for MacBook
-/*
+
 #include "Enemy.cpp"
 #include "Player.cpp"
 #include "Object.cpp"
 #include "Position.cpp"
 #include <time.h>
-*/
+
 
 void board(char map[][10], int size);
 
@@ -24,12 +24,12 @@ int main()
 	setlocale(LC_ALL, "");
 
 	// Creating the map
-	char map[10][10]{};
+	char map[10][10];
 	for (int i = 0; i < 10; i++)
 	{
 		for (int j = 0; j < 10; j++)
 		{
-			map[i][j] = '*';
+			map[i][j] = '.';
 		}
 	}
 
@@ -40,16 +40,18 @@ int main()
 	map[p1->xLocation()][p1->yLocation()] = 'P';
 
 	// Creting enemies >:(
-	int random = 0;
-	random = rand() % 9 + 1;
+	int randomX = 0, randomY = 0;
+	randomX = rand() % 8 + 1;
+	randomY = rand() % 9;
 
-	Enemy *enemy = new Enemy(random, random / 2);
+	Enemy *enemy = new Enemy(randomX, randomY, 5, 5);
 	Position *p = new Position(enemy->xLocation(), enemy->yLocation());
 	p1->add(p);
 	map[enemy->xLocation()][enemy->yLocation()] = '#';
 
-	random = rand() % 9 + 1;
-	Enemy* enemy2 = new Enemy(random / 2, random);
+	randomX = rand() % 9;
+	randomY = rand() % 8 + 1;
+	Enemy* enemy2 = new Enemy(randomX, randomY, 5, 100);
 	Position* p2 = new Position(enemy2->xLocation(), enemy2->yLocation());
 	p1->add(p2);
 	map[enemy2->xLocation()][enemy2->yLocation()] = '#';
@@ -60,17 +62,24 @@ int main()
 	{
 		// clears terminal, so I can draw the map now
 		cout << "\033[2J\033[H";
+
+		// Draws the map
 		board(map, 10);
-		// Shows my health
+
+		// Shows health
 		cout << "Your health: " << p1->checkHealth() << endl;
-		// Player takes a step
+		cout << "Enemy1 health: " << enemy->checkHealth() << endl;
+		cout << "Enemy2 health: " << enemy2->checkHealth() << endl;
+
+		// Player takes a step and we keeping the previous step coordinates
 		prevX = p1->xLocation();
 		prevY = p1->yLocation();
 		p1->step();
 		map[p1->xLocation()][p1->yLocation()] = 'P';
-		map[prevX][prevY] = '*';
+		map[prevX][prevY] = '.';
+
 		// Checks for collision
-		if (p1->isCollided(p1->xLocation(), p1->yLocation()))
+		if (p1->isCollided(enemy) || p1->isCollided(enemy2))
 		{
 			cout << "You encounter an enemy!" << endl;
 			// Checks is you survived the encounter
@@ -81,7 +90,7 @@ int main()
 				if (p1->winner())
 				{
 					cout << p1->checkHealth() << endl;
-					cout << "Congtrats!!! You defeated all of yours enemies!";
+					cout << "Congtrats!!! You defeated all of yours enemies!\n";
 					game = 0;
 				}
 				cout << "Move forward and don't look back..." << endl;
