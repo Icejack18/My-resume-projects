@@ -127,9 +127,27 @@ bool Player::isCollided(Enemy *e)
 	return false;
 }
 
-void Player::add(Position *p)
+bool Player::isCollided(Healthpack *hp)
+{
+    for (int i = 0; i < p_healthpacks.size(); i++)
+	{
+		if (hp->xLocation() == xLocation() && hp->yLocation() == yLocation())
+		{
+			health += hp->addedHealth();
+			return true;
+		}
+	}
+	return false;
+}
+
+void Player::addEnemy(Position *p)
 {
 	p_enemies.push_back(p);
+}
+
+void Player::addHealthpack(Position *p)
+{
+	p_healthpacks.push_back(p);
 }
 
 int Player::checkHealth()

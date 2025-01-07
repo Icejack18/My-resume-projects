@@ -1,6 +1,7 @@
 #pragma once
 #include "Object.h"
 #include "Enemy.h"
+#include "Healthpack.h"
 
 class Player : public Object
 {
@@ -10,7 +11,9 @@ public:
 	void step();
 	bool winner();
 	bool isCollided(Enemy *e);
-	void add(Position *p);
+	bool isCollided(Healthpack *hp);
+	void addEnemy(Position *p);
+	void addHealthpack(Position *p);
 	int checkHealth();
 	int xLocation();
 	int yLocation();
