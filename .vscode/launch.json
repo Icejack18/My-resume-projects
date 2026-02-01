@@ -1,0 +1,25 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "(lldb) Launch",             // Name of the launch configuration
+            "type": "cppdbg",                   // Debugger type for C++
+            "request": "launch",                // Debug mode (launch or attach)
+            "program": "${workspaceFolder}/output",  // Path to the compiled executable
+            "args": [],                         // Command-line arguments (if any)
+            "stopAtEntry": false,               // Whether to stop at program entry
+            "cwd": "${workspaceFolder}",        // Current working directory
+            "environment": [],                  // Environment variables
+            "externalConsole": false,           // Use external console (set true if needed)
+            "MIMode": "lldb",                   // Use the LLDB debugger on macOS
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for lldb",
+                    "text": "settings set target.x86-disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ],
+            "preLaunchTask": "build"            // Pre-launch task for building the project
+        }
+    ]
+}

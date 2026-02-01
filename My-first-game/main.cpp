@@ -1,19 +1,18 @@
 // Settings for Windows
-
 #include "Enemy.h"
 #include "Player.h"
 #include "Object.h"
 #include "Position.h"
-#include <time.h>
+#include "Healthpack.h"
 
 // Settings for MacBook
-
 #include "Enemy.cpp"
 #include "Player.cpp"
 #include "Object.cpp"
 #include "Position.cpp"
-#include <time.h>
+#include "Healthpack.cpp"
 
+#include <time.h>
 
 void board(char map[][10], int size);
 
@@ -33,80 +32,90 @@ int main()
 		}
 	}
 
-	// Creating you :)
-	Player *p1 = new Player();
-	int prevX = p1->xLocation();
-	int prevY = p1->yLocation();
-	map[p1->xLocation()][p1->yLocation()] = 'P';
+	// Creating you :D
+	Player *player = new Player();
+	int prevX = player->xLocation();
+	int prevY = player->yLocation();
+	map[player->xLocation()][player->yLocation()] = 'P';
 
-	// Creting enemies >:(
+	// Creating health packs :)
 	int randomX = 0, randomY = 0;
 	randomX = rand() % 8 + 1;
 	randomY = rand() % 9;
 
-	Enemy *enemy = new Enemy(randomX, randomY, 5, 5);
-	Position *p = new Position(enemy->xLocation(), enemy->yLocation());
-	p1->add(p);
-	map[enemy->xLocation()][enemy->yLocation()] = '#';
+	Healthpack *healthpack = new Healthpack(randomX, randomY, 2);
+	Position *p_healthpack = new Position(healthpack->xLocation(), healthpack->yLocation());
+	player->addHealthpack(p_healthpack);
+	map[healthpack->xLocation()][healthpack->yLocation()] = 'H';
+
+	// Creting enemies >:(
+	randomX = rand() % 8 + 1;
+	randomY = rand() % 9;
+
+	Enemy *troll = new Enemy(randomX, randomY, 15, 10);
+	Position *p_troll = new Position(troll->xLocation(), troll->yLocation());
+	player->addEnemy(p_troll);
+	map[troll->xLocation()][troll->yLocation()] = 'T';
 
 	randomX = rand() % 9;
 	randomY = rand() % 8 + 1;
-	Enemy* enemy2 = new Enemy(randomX, randomY, 5, 100);
-	Position* p2 = new Position(enemy2->xLocation(), enemy2->yLocation());
-	p1->add(p2);
-	map[enemy2->xLocation()][enemy2->yLocation()] = '#';
+	Enemy* goblin = new Enemy(randomX, randomY, 5, 5);
+	Position* p_goblin = new Position(goblin->xLocation(), goblin->yLocation());
+	player->addEnemy(p_goblin);
+	map[goblin->xLocation()][goblin->yLocation()] = 'G';
 
-	// Gameplay condition
-	bool game = 1;
-	while (game)
+	// Gameplay loop
+	while (true)
 	{
-		// clears terminal, so I can draw the map now
+		// clears terminal, so I can draw the map after each move in top corner
 		cout << "\033[2J\033[H";
 
 		// Draws the map
 		board(map, 10);
 
-		// Shows health
-		cout << "Your health: " << p1->checkHealth() << endl;
-		cout << "Enemy1 health: " << enemy->checkHealth() << endl;
-		cout << "Enemy2 health: " << enemy2->checkHealth() << endl;
-
-		// Player takes a step and we keeping the previous step coordinates
-		prevX = p1->xLocation();
-		prevY = p1->yLocation();
-		p1->step();
-		map[p1->xLocation()][p1->yLocation()] = 'P';
-		map[prevX][prevY] = '.';
-
-		// Checks for collision
-		if (p1->isCollided(enemy) || p1->isCollided(enemy2))
+		// Checks for collision with Enemies
+		if (player->isCollided(troll) || player->isCollided(goblin))
 		{
 			cout << "You encounter an enemy!" << endl;
 			// Checks is you survived the encounter
-			if (p1->checkHealth() > 0)
+			if (player->checkHealth() > 0)
 			{
 				cout << "You are still alive!\n";
 				// Checks if there are enemies still alive
-				if (p1->winner())
+				if (player->winner())
 				{
-					cout << p1->checkHealth() << endl;
 					cout << "Congtrats!!! You defeated all of yours enemies!\n";
-					game = 0;
+					break;
 				}
 				cout << "Move forward and don't look back..." << endl;
 			}
 			else
 			{
-				cout << p1->checkHealth() << endl;
 				cout << "Game Over!\nYou died before defeating all of your enemies\n";
-				game = 0;
+				break;
 			}
+		}
+		else if (player->isCollided(healthpack))
+		{
+			cout << "Congrats! You found health pack! \nYour hp was increased. Now go on\n";
 		}
 		else
 		{
-			cout << "You didn't encounter an enemy!" << endl;
-			cout << "You should move along..." << endl;
+			cout << "You look around and do not see anything interesting." << endl;
+			cout << "You should continue with your journey" << endl;
 		}
+
+		// Shows health
+		cout << "Your health: " << player->checkHealth() << endl;
+		cout << "Troll's health: " << troll->checkHealth() << endl;
+		cout << "Goblin's health: " << goblin->checkHealth() << endl;
+
+		// Player takes a step and we keeping the previous step coordinates
+		prevX = player->xLocation();
+		prevY = player->yLocation();
+		player->step();
+		map[player->xLocation()][player->yLocation()] = 'P';
+		map[prevX][prevY] = '.';
 	}
 }
 
