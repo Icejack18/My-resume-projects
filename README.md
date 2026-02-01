@@ -23,6 +23,6 @@ I finally made something that I am a bit proud of. it is not that great at the m
 
 I made this game and didn't have enough time to make it like I imagined it fully, but basic concept is there I will make it into short game with (probably) 10 minutes of gameplay, unless I get stuck in my desire for improvement and make it into second Undertale (basic game and I already have a big head)
 
-## Plans for the future (10.12.2024)
+## Plans for the future
 
 I will add a lot more to this repo and hope one day this work will help me in finding job. I will make some games for this repo and some projects that will not even connected to games. Right now I will work on my first game and make it more interesting. Add some healing, power-boosts and other stuff like different enemies.
